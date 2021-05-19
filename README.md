@@ -1,10 +1,8 @@
 # resync
 
-`sync.Once` with `Reset()`
+`sync.Once` with `Reset()` and `Error()`
 
   * See [sync.Once](http://golang.org/pkg/sync/#Once)
-
-Rather than adding this project as a dependency, consider [dropping](https://github.com/matryer/drop) this file into your project.
 
 ## Example
 

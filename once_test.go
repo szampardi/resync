@@ -1,20 +1,21 @@
 package resync_test
 
 import (
-	"fmt"
 	"testing"
+
+	"github.com/szampardi/resync"
 )
 
 func TestOnceReset(t *testing.T) {
 	var calls int
-	var c = Once{Fn: func() error {
+	var c = resync.Once{Fn: func() error {
 		calls++
 		return nil
 	}}
 	c.Do()
 	c.Do()
 	c.Do()
-	fmt.Println("calls should be 1 now:", calls)
+	t.Logf("calls should be 1 now: %d", calls)
 	if calls != 1 {
 		t.Fail()
 	}
@@ -22,7 +23,7 @@ func TestOnceReset(t *testing.T) {
 	c.Do()
 	c.Do()
 	c.Do()
-	fmt.Println("calls should be 2 now:", calls)
+	t.Logf("calls should be 2 now: %d", calls)
 	if calls != 2 {
 		t.Fail()
 	}
