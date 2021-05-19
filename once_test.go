@@ -1,35 +1,29 @@
 package resync_test
 
 import (
+	"fmt"
 	"testing"
-
-	"github.com/cheekybits/is"
-	"github.com/matryer/resync"
 )
 
 func TestOnceReset(t *testing.T) {
-	is := is.New(t)
 	var calls int
-	var c resync.Once
-	c.Do(func() {
+	var c = Once{Fn: func() error {
 		calls++
-	})
-	c.Do(func() {
-		calls++
-	})
-	c.Do(func() {
-		calls++
-	})
-	is.Equal(calls, 1)
+		return nil
+	}}
+	c.Do()
+	c.Do()
+	c.Do()
+	fmt.Println("calls should be 1 now:", calls)
+	if calls != 1 {
+		t.Fail()
+	}
 	c.Reset()
-	c.Do(func() {
-		calls++
-	})
-	c.Do(func() {
-		calls++
-	})
-	c.Do(func() {
-		calls++
-	})
-	is.Equal(calls, 2)
+	c.Do()
+	c.Do()
+	c.Do()
+	fmt.Println("calls should be 2 now:", calls)
+	if calls != 2 {
+		t.Fail()
+	}
 }
